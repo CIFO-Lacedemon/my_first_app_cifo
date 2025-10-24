@@ -11,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Persona? persona;
+  List<Persona> personas = [];
   @override
   Widget build(BuildContext context) {
     String nombre = persona?.firstName ?? 'No se tu nombre';
@@ -18,12 +19,20 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           persona = await getSingleUserObjetct(1);
+          personas = await getListPersonasObject();
           print(nombre);
           setState(() {});
           //  getReqRespService();
         },
       ),
-      body: Center(child: Text(nombre)),
+
+      // body: Center(child: Text(nombre)),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Text(persona?.firstName ?? 'Este dato es nulo');
+        },
+        itemCount: personas.length,
+      ),
     );
   }
 }
